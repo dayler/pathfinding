@@ -50,7 +50,7 @@ public class Pathfinding {
             try (FileInputStream is = new FileInputStream(args[0])) {
                 properties.load(is);
             }
-            PathfindingApp app = new PathfindingApp();
+            PathfindingApp app = new PathfindingApp(new Config(properties));
             app.start();
             // Add shutdown hook.
             Runtime.getRuntime().addShutdownHook(new Thread(app::stop));

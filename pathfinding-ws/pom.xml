@@ -44,7 +44,7 @@
       </plugin>
       <!-- copy dependencies on package phase -->
       <!-- copy dependencies -->
-      <plugin>
+      <!-- <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
         <version>2.10</version>
@@ -61,7 +61,7 @@
             </configuration>
           </execution>
         </executions>
-      </plugin>
+      </plugin> -->
       <!-- add wsgen plugin -->
       <plugin>
         <groupId>org.jvnet.jax-ws-commons</groupId>
@@ -137,7 +137,7 @@
       </plugins>
     </pluginManagement>
   </build>
-    
+
   <dependencies>
     <!-- project dependency -->
     <dependency>

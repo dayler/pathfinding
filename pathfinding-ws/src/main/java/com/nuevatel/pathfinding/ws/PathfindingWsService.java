@@ -23,7 +23,7 @@ import com.nuevatel.pathfinding.ws.domain.PathResponse;
  * @since 1.8
  */
 @WebService(endpointInterface="com.nuevatel.pathfinding.ws.PathfindingWs", serviceName="pathfinding")
-public class PathfindingWsService implements PathfindingWs {
+public class PathfindingWsService implements PathfindingWs{
 
     /* (non-Javadoc)
      * @see com.nuevatel.pathfinding.ws.PathfindingWS#getPath(java.lang.String)
