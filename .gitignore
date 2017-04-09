@@ -19,6 +19,9 @@ dist/
 
 # eclipse workspace #
 .metadata
+.classpath
+.project
+.settings
 
 # generic files to ignore #
 *~
