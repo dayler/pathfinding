@@ -37,13 +37,12 @@ public class PathfindingWsService implements PathfindingWs {
         // No op.
     }
     
-    public PathfindingWsService(DijkstraPathfinding processor, String destinationNodeName) {
+    public PathfindingWsService(DijkstraPathfinding processor) {
         ParameterUtils.requiredNotNull(processor, "null Djikstra processor.");
-        ParameterUtils.requiredNotEmpty(destinationNodeName, "null or empty destinationNodeName.");
         // 
         this.processor = processor;
-        Node source = Optional.ofNullable(processor.getNodeFromName(destinationNodeName))
-                              .orElseThrow(() -> new NullSourceException(destinationNodeName));
+        Node source = Optional.ofNullable(processor.getNodeFromName("PBlanco,SantaCruz"))
+                              .orElseThrow(() -> new NullSourceException("PBlanco,SantaCruz"));
         // process all nodes.
         processor.execute(source);
     }

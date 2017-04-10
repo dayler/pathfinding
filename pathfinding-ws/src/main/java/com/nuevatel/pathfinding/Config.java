@@ -33,8 +33,6 @@ public class Config {
     
     private String dbPath;
     
-    private String destinationNodeName;
-    
     public Config(Properties properties) {
         ParameterUtils.requiredNotNull(properties, "properties");
         // 
@@ -44,11 +42,6 @@ public class Config {
         this.user = properties.getProperty("ws.user");
         this.password = properties.getProperty("ws.password");
         this.dbPath = properties.getProperty("db.source");
-        this.destinationNodeName = properties.getProperty("destinationNodeName");
-    }
-    
-    public String getDestinationNodeName() {
-        return destinationNodeName;
     }
     
     public String getDbPath() {

@@ -11,21 +11,59 @@
   <artifactId>pathfinding-client</artifactId>
   <name>pathfinding-client</name>
   <url>http://maven.apache.org</url>
-  
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <core.basedir>../pathfinding-core</core.basedir>
   </properties>
 
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.jvnet.jax-ws-commons</groupId>
+        <artifactId>jaxws-maven-plugin</artifactId>
+        <version>2.3</version>
+        <configuration>
+          <keep>true</keep>
+          <vmArgs>
+            <vmArg>-Duser.country=EN</vmArg>
+            <vmArg>-Duser.language=EN</vmArg>
+            <vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
+          </vmArgs>
+        </configuration>
+        <executions>
+          <execution>
+            <id>generate-stubs</id>
+            <phase>clean</phase>
+            <goals>
+              <goal>wsimport</goal>
+            </goals>
+            <configuration>
+              <wsdlDirectory>${core.basedir}/src/main/resources</wsdlDirectory>
+              <wsdlFiles>
+                <wsdlFile>Pathfinding.wsdl</wsdlFile>
+              </wsdlFiles>
+              <bindingDirectory>src/main/resources</bindingDirectory>
+              <bindingFiles>
+                <bindingFile>bindings.xml</bindingFile>
+              </bindingFiles>
+              <sourceDestDir>src/main/java</sourceDestDir>
+              <packageName>com.nuevatel.pathfinding.ws.client</packageName>
+              <wsdlLocation>/Pathfinding.wsdl</wsdlLocation>
+              <verbose>true</verbose>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
   <dependencies>
+    <!-- project dependency -->
     <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-core</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <scope>test</scope>
+      <groupId>com.nuevatel.pathfinding</groupId>
+      <artifactId>pathfinding-core</artifactId>
+      <version>1.0</version>
     </dependency>
   </dependencies>
 </project>
