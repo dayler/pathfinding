@@ -23,7 +23,7 @@ import com.nuevatel.pathfinding.ws.client.PathfindingWSPort;
  * @since 1.8
  *
  */
-public class TestWsClient {
+public class TestPathfindingWsClient {
     
     /**
      * 
@@ -31,7 +31,7 @@ public class TestWsClient {
      */
     public static void main(String[] args) {
         if (args.length < 3) {
-            System.out.println("Use: java TestWsClient <ip address> <port> <intersection name>");
+            System.out.println("Use: java TestPathfindingWsClient <ip address> <port> <intersection name>");
             return;
         }
         try {
