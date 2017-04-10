@@ -17,8 +17,6 @@ import java.util.logging.Logger;
  * <p>El contenido de este archivo esta clasificado como: </p>
  * <p>INFORMACION DE CONFIDENCIALIDAD ALTA </p>
  * 
- * TODO
- * 
  * @author asalazar
  * @version 1.0 Apr 8, 2017
  * @since 1.8

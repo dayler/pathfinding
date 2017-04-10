@@ -41,6 +41,8 @@ public class DijkstraPathfinding {
     
     private Map<Node, Integer> distance;
 
+    private Object lck = new Object();
+
     public DijkstraPathfinding(Graph graph) {
         ParameterUtils.requiredNotNull(graph, "null graph.");
         // create a copy of the array so that we can operate on this array
@@ -55,12 +57,10 @@ public class DijkstraPathfinding {
     public void execute(Node source) {
         settledNodes = new HashSet<Node>(); // Utilizados.
         unSettledNodes = new HashSet<Node>(); // No utilizados.
-        
         distance = new HashMap<Node, Integer>();
         predecessors = new HashMap<Node, Node>();
         distance.put(source, 0);
         unSettledNodes.add(source);
-        
         while (!unSettledNodes.isEmpty()) {
             // while unSettledNodes is not empty.
             Node node = getMinimum(unSettledNodes);
@@ -122,24 +122,27 @@ public class DijkstraPathfinding {
         Integer d = distance.get(destination);
         return d == null ? Integer.MAX_VALUE : d;
     }
-
-    /*
-     * This method returns the path from the source to the selected target and
-     * NULL if no path exists
+    
+    /**
+     * 
+     * @param target
+     * @return the path from the source to the selected target and NULL if no path exists.
      */
     public List<Node> getPath(Node target) {
-        List<Node> path = new LinkedList<Node>();
         Node step = target;
-        // check if a path exists
         if (predecessors.get(step) == null) {
+            // node does not exisit.
             return null;
         }
-        path.add(step);
-        while (predecessors.get(step) != null) {
-            step = predecessors.get(step);
+        synchronized (lck) {
+            List<Node> path = new LinkedList<Node>();
             path.add(step);
+            while (predecessors.get(step) != null) {
+                step = predecessors.get(step);
+                path.add(step);
+            }
+            // Put it into the correct order
+            return path;
         }
-        // Put it into the correct order
-        return path;
     }
 }
