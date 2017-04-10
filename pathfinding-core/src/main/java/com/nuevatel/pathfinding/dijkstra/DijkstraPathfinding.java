@@ -4,7 +4,6 @@
 package com.nuevatel.pathfinding.dijkstra;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -119,7 +118,7 @@ public class DijkstraPathfinding {
         return settledNodes.contains(vertex);
     }
 
-    private int getShortestDistance(Node destination) {
+    public int getShortestDistance(Node destination) {
         Integer d = distance.get(destination);
         return d == null ? Integer.MAX_VALUE : d;
     }
@@ -129,7 +128,7 @@ public class DijkstraPathfinding {
      * NULL if no path exists
      */
     public List<Node> getPath(Node target) {
-        LinkedList<Node> path = new LinkedList<Node>();
+        List<Node> path = new LinkedList<Node>();
         Node step = target;
         // check if a path exists
         if (predecessors.get(step) == null) {
@@ -141,7 +140,6 @@ public class DijkstraPathfinding {
             path.add(step);
         }
         // Put it into the correct order
-//        Collections.reverse(path);
         return path;
     }
 }

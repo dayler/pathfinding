@@ -71,6 +71,7 @@ public class PathfindingApp {
         if (wsServer != null) {
             wsServer.stop();
         }
+        logger.log(Level.INFO, "All process was stopped.");
     }
     
     private void initGraph() throws FailedOnCreateDbConnectionException, SQLException, GraphDaoException {

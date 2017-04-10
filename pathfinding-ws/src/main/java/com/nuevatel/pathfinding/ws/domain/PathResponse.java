@@ -45,15 +45,19 @@ public class PathResponse {
     @XmlElement(name = "route")
     private List<String>route;
     
+    @XmlElement(name = "totalDistance")
+    private int distance;
+    
     public PathResponse() {
         // No op.
     }
     
-    public PathResponse(String fromPoint, List<String>route) {
+    public PathResponse(String fromPoint, int distance, List<String>route) {
         ParameterUtils.requiredNotEmpty(fromPoint, "null or empty fromPoint.");
         ParameterUtils.requiredNotNull(route, "null route.");
         // 
         this.fromPoint = fromPoint;
+        this.distance = distance;
         this.route = route;
     }
     
@@ -63,5 +67,9 @@ public class PathResponse {
     
     public String getFromPoint() {
         return fromPoint;
+    }
+    
+    public int getDistance() {
+        return distance;
     }
 }

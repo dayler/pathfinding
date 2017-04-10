@@ -3,8 +3,7 @@
  */
 package com.nuevatel.pathfinding.ws;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -56,9 +55,11 @@ public class PathfindingWsService implements PathfindingWs {
         Node target = processor.getNodeFromName(fromPoint);
         if (target != null) {
             List<Node>nodeList = processor.getPath(target);
-            return new PathResponse(fromPoint, nodeList.stream().map(n -> n.getName()).collect(Collectors.toList()));
+            return new PathResponse(fromPoint,
+                                    processor.getShortestDistance(target),
+                                    nodeList.stream().map(n -> n.getName()).collect(Collectors.toList()));
         }
         
-        return new PathResponse("fromPoint", new ArrayList<>(Arrays.asList("route1", "route2")));
+        return new PathResponse(fromPoint, 0, Collections.emptyList());
     }
 }
