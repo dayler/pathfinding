@@ -60,8 +60,9 @@ public class PathfindingWsService implements PathfindingWs {
         try {
             if (target != null) {
                 List<Node> nodeList = processor.getPath(target);
-                return new PathResponse(fromPoint, processor.getShortestDistance(target),
-                        nodeList.stream().map(n -> n.getName()).collect(Collectors.toList()));
+                return new PathResponse(fromPoint,
+                                        processor.getShortestDistance(target) * 10,
+                                        nodeList.stream().map(n -> n.getName()).collect(Collectors.toList()));
             }
         } catch (Exception ex) {
             logger.log(Level.WARNING, "Failed to get fast path for " + fromPoint, ex);
