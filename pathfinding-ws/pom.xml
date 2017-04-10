@@ -42,6 +42,24 @@
           </filesets>
         </configuration>
       </plugin>
+      <!-- setup main class -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.6</version>
+        <configuration>
+          <finalName>pathfinding-ws-${project.version}</finalName>
+          <outputDirectory>build/lib</outputDirectory>
+          <archive>
+            <manifest>
+              <addClasspath>true</addClasspath>
+              <classpathPrefix>.</classpathPrefix>
+              <mainClass>com.nuevatel.pathfinding.Pathfinding</mainClass>
+              <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
       <!-- copy dependencies on package phase -->
       <!-- copy dependencies -->
       <plugin>
@@ -96,7 +114,8 @@
     </plugins>
     <pluginManagement>
       <plugins>
-        <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+        <!--This plugin's configuration is used to store Eclipse m2e settings 
+          only. It has no influence on the Maven build itself. -->
         <plugin>
           <groupId>org.eclipse.m2e</groupId>
           <artifactId>lifecycle-mapping</artifactId>

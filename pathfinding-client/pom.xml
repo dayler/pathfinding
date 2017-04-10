@@ -19,6 +19,7 @@
 
   <build>
     <plugins>
+      <!-- generate client -->
       <plugin>
         <groupId>org.jvnet.jax-ws-commons</groupId>
         <artifactId>jaxws-maven-plugin</artifactId>
@@ -51,6 +52,43 @@
               <packageName>com.nuevatel.pathfinding.ws.client</packageName>
               <wsdlLocation>/Pathfinding.wsdl</wsdlLocation>
               <verbose>true</verbose>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- setup main class -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.6</version>
+        <configuration>
+          <finalName>pathfinding-client-${project.version}</finalName>
+          <outputDirectory>build/lib</outputDirectory>
+          <archive>
+            <manifest>
+              <addClasspath>true</addClasspath>
+              <classpathPrefix>.</classpathPrefix>
+              <mainClass>com.nuevatel.pathfinding.ws.test.TestPathfindingWsClient</mainClass>
+              <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+      <!-- copy dependencies -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <version>2.10</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>copy-dependencies</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${basedir}/build/lib</outputDirectory>
+              <includeScope>runtime</includeScope>
+              <excludeScope>provided</excludeScope>
             </configuration>
           </execution>
         </executions>

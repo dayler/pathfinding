@@ -6,6 +6,8 @@ package com.nuevatel.pathfinding.ws;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import javax.jws.WebService;
@@ -31,6 +33,8 @@ import com.nuevatel.pathfinding.ws.domain.PathResponse;
 @WebService(endpointInterface="com.nuevatel.pathfinding.ws.PathfindingWs", serviceName="pathfinding")
 public class PathfindingWsService implements PathfindingWs {
     
+    private static Logger logger = Logger.getLogger(PathfindingWsService.class.getName());
+    
     private DijkstraPathfinding processor = null;
     
     public PathfindingWsService() {
@@ -53,13 +57,15 @@ public class PathfindingWsService implements PathfindingWs {
     @Override
     public PathResponse getPath(String fromPoint) {
         Node target = processor.getNodeFromName(fromPoint);
-        if (target != null) {
-            List<Node>nodeList = processor.getPath(target);
-            return new PathResponse(fromPoint,
-                                    processor.getShortestDistance(target),
-                                    nodeList.stream().map(n -> n.getName()).collect(Collectors.toList()));
+        try {
+            if (target != null) {
+                List<Node> nodeList = processor.getPath(target);
+                return new PathResponse(fromPoint, processor.getShortestDistance(target),
+                        nodeList.stream().map(n -> n.getName()).collect(Collectors.toList()));
+            }
+        } catch (Exception ex) {
+            logger.log(Level.WARNING, "Failed to get fast path for " + fromPoint, ex);
         }
-        
         return new PathResponse(fromPoint, 0, Collections.emptyList());
     }
 }
