@@ -18,13 +18,13 @@ public class Edge {
     
     private String id;
     
-    private Vertex source;
+    private Node source;
     
-    private Vertex destination;
+    private Node destination;
     
     private int weight;
 
-    public Edge(String id, Vertex source, Vertex destination, int weight) {
+    public Edge(String id, Node source, Node destination, int weight) {
         this.id = id;
         this.source = source;
         this.destination = destination;
@@ -35,11 +35,11 @@ public class Edge {
         return id;
     }
 
-    public Vertex getDestination() {
+    public Node getDestination() {
         return destination;
     }
 
-    public Vertex getSource() {
+    public Node getSource() {
         return source;
     }
 

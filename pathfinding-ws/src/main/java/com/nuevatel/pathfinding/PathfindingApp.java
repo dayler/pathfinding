@@ -3,6 +3,8 @@
  */
 package com.nuevatel.pathfinding;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
@@ -10,6 +12,12 @@ import java.util.logging.Logger;
 
 import javax.xml.ws.Endpoint;
 
+import com.nuevatel.pathfinding.dao.GraphDao;
+import com.nuevatel.pathfinding.dao.JdbcDerbyConnectionBuilder;
+import com.nuevatel.pathfinding.dijkstra.DijkstraPathfinding;
+import com.nuevatel.pathfinding.dijkstra.domain.Graph;
+import com.nuevatel.pathfinding.exception.FailedOnCreateDbConnectionException;
+import com.nuevatel.pathfinding.exception.GraphDaoException;
 import com.nuevatel.pathfinding.utils.ParameterUtils;
 import com.nuevatel.pathfinding.ws.PathfindingWsService;
 import com.nuevatel.pathfinding.ws.WsServer;
@@ -40,7 +48,9 @@ public class PathfindingApp {
     private Config config;
 
     private WsServer wsServer = null;
-
+    
+    private Graph graph = null;
+    
     public PathfindingApp(Config config) {
         ParameterUtils.requiredNotNull(config, "config");
         //
@@ -48,7 +58,13 @@ public class PathfindingApp {
     }
 
     public void start() {
-        startWsi();
+        try {
+            initGraph();
+            startWsi();
+        } catch (Exception ex) {
+            logger.log(Level.SEVERE, "Failed to initialize PathfindingApp.", ex);
+            stop();
+        }
     }
 
     public void stop() {
@@ -56,9 +72,20 @@ public class PathfindingApp {
             wsServer.stop();
         }
     }
-
+    
+    private void initGraph() throws FailedOnCreateDbConnectionException, SQLException, GraphDaoException {
+        // create connection.
+        JdbcDerbyConnectionBuilder builder = new JdbcDerbyConnectionBuilder(config.getDbPath());
+        try (Connection conn = builder.buildConnection()) {
+            // get graph from dao.
+            GraphDao graphDao = new GraphDao();
+            Graph graph = graphDao.getGraph(conn);
+            this.graph = graph;
+        }
+    }
+    
     private void startWsi() {
-        PathfindingWsService wsImpl = new PathfindingWsService();
+        PathfindingWsService wsImpl = new PathfindingWsService(new DijkstraPathfinding(graph));
         Set<Endpoint> endpointSet = new HashSet<>();
         endpointSet.add(Endpoint.create(wsImpl));
         try {

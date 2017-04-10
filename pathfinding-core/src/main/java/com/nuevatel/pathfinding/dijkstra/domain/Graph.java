@@ -20,20 +20,20 @@ import java.util.List;
  */
 public class Graph {
     
-    private List<Vertex> vertexes;
+    private List<Node> nodes;
     
     private List<Edge> edges;
 
-    public Graph(List<Vertex> vertexes, List<Edge> edges) {
-            this.vertexes = new ArrayList<>(vertexes);
+    public Graph(List<Node> nodes, List<Edge> edges) {
+            this.nodes = new ArrayList<>(nodes);
             this.edges = new ArrayList<>(edges);
     }
 
-    public List<Vertex> getVertexes() {
-            return Collections.unmodifiableList(vertexes);
+    public List<Node> getNodes() {
+        return Collections.unmodifiableList(nodes);
     }
 
     public List<Edge> getEdges() {
-            return Collections.unmodifiableList(edges);
+        return Collections.unmodifiableList(edges);
     }
 }

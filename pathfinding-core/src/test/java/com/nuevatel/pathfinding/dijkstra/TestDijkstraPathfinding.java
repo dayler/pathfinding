@@ -6,7 +6,6 @@ package com.nuevatel.pathfinding.dijkstra;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.junit.After;
@@ -17,7 +16,7 @@ import org.junit.Test;
 
 import com.nuevatel.pathfinding.dijkstra.domain.Edge;
 import com.nuevatel.pathfinding.dijkstra.domain.Graph;
-import com.nuevatel.pathfinding.dijkstra.domain.Vertex;
+import com.nuevatel.pathfinding.dijkstra.domain.Node;
 
 /**
  * <p>The TestDijkstraAlgorithm class.</p>
@@ -30,9 +29,9 @@ import com.nuevatel.pathfinding.dijkstra.domain.Vertex;
  * @since 1.8
  *
  */
-public class TestDijkstraAlgorithm {
+public class TestDijkstraPathfinding {
     
-    private List<Vertex> nodes;
+    private List<Node> nodes;
     
     private List<Edge> edges;
     
@@ -70,10 +69,10 @@ public class TestDijkstraAlgorithm {
 
     @Test
     public void testExcute() {
-        nodes = new ArrayList<Vertex>();
+        nodes = new ArrayList<Node>();
         edges = new ArrayList<Edge>();
         for (int i = 0; i < 11; i++) {
-            Vertex location = new Vertex("Node_" + i, "Node_" + i);
+            Node location = new Node("Node_" + i, "Node_" + i);
             nodes.add(location);
         }
         addEdge("Edge_0", 0, 1, 85);
@@ -90,14 +89,14 @@ public class TestDijkstraAlgorithm {
         addEdge("Edge_11", 1, 10, 600);
         // Lets check from location Loc_1 to Loc_10
         Graph graph = new Graph(nodes, edges);
-        DijkstraAlgorithm dijkstra = new DijkstraAlgorithm(graph);
+        DijkstraPathfinding dijkstra = new DijkstraPathfinding(graph);
         // TODO 
         dijkstra.execute(nodes.get(0));
-        List<Vertex> path = dijkstra.getPath(nodes.get(10));
+        List<Node> path = dijkstra.getPath(nodes.get(10));
         
         assertNotNull(path);
         assertTrue(path.size() > 0);
-        for (Vertex vertex : path) {
+        for (Node vertex : path) {
             System.out.println(vertex);
         }
     }

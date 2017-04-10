@@ -5,9 +5,16 @@ package com.nuevatel.pathfinding.ws;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.jws.WebService;
 
+import com.nuevatel.pathfinding.dijkstra.DijkstraPathfinding;
+import com.nuevatel.pathfinding.dijkstra.domain.Node;
+import com.nuevatel.pathfinding.exception.NullSourceException;
+import com.nuevatel.pathfinding.utils.ParameterUtils;
 import com.nuevatel.pathfinding.ws.domain.PathResponse;
 
 /**
@@ -23,13 +30,35 @@ import com.nuevatel.pathfinding.ws.domain.PathResponse;
  * @since 1.8
  */
 @WebService(endpointInterface="com.nuevatel.pathfinding.ws.PathfindingWs", serviceName="pathfinding")
-public class PathfindingWsService implements PathfindingWs{
-
+public class PathfindingWsService implements PathfindingWs {
+    
+    private DijkstraPathfinding processor = null;
+    
+    public PathfindingWsService() {
+        // No op.
+    }
+    
+    public PathfindingWsService(DijkstraPathfinding processor) {
+        ParameterUtils.requiredNotNull(processor, "null Djikstra processor.");
+        // 
+        this.processor = processor;
+        Node source = Optional.ofNullable(processor.getNodeFromName("PBlanco,SantaCruz"))
+                              .orElseThrow(() -> new NullSourceException("PBlanco,SantaCruz"));
+        // process all nodes.
+        processor.execute(source);
+    }
+    
     /* (non-Javadoc)
      * @see com.nuevatel.pathfinding.ws.PathfindingWS#getPath(java.lang.String)
      */
     @Override
     public PathResponse getPath(String fromPoint) {
+        Node target = processor.getNodeFromName(fromPoint);
+        if (target != null) {
+            List<Node>nodeList = processor.getPath(target);
+            return new PathResponse(fromPoint, nodeList.stream().map(n -> n.getName()).collect(Collectors.toList()));
+        }
+        
         return new PathResponse("fromPoint", new ArrayList<>(Arrays.asList("route1", "route2")));
     }
 }

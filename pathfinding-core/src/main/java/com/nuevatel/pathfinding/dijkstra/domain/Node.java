@@ -16,7 +16,7 @@ import com.nuevatel.pathfinding.utils.ParameterUtils;
  * @since 1.8
  *
  */
-public class Vertex {
+public class Node {
     
     private String id;
     
@@ -27,7 +27,7 @@ public class Vertex {
      * @param id To identify the node. It cannot be null.
      * @param name
      */
-    public Vertex(String id, String name) {
+    public Node(String id, String name) {
         ParameterUtils.requiredNotNull(id, "null node id.");
         // 
         this.id = id;
@@ -62,7 +62,7 @@ public class Vertex {
             return false;
         }
         // Compare vertex.
-        return id.equals(((Vertex)obj).id);
+        return id.equals(((Node)obj).id);
     }
 
     @Override

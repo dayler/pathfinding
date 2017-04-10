@@ -31,6 +31,8 @@ public class Config {
     
     private String password;
     
+    private String dbPath;
+    
     public Config(Properties properties) {
         ParameterUtils.requiredNotNull(properties, "properties");
         // 
@@ -39,8 +41,13 @@ public class Config {
         wsPoolSize = IntegerUtils.tryParse(properties.getProperty("ws.poolSize"), 8);
         this.user = properties.getProperty("ws.user");
         this.password = properties.getProperty("ws.password");
+        this.dbPath = properties.getProperty("db.source");
     }
-
+    
+    public String getDbPath() {
+        return dbPath;
+    }
+    
     public String getAddress() {
         return address;
     }

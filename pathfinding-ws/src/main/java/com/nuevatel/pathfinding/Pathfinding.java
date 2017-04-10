@@ -40,6 +40,7 @@ public class Pathfinding {
     }
     
     public static void main(String[] args) {
+        System.out.println("user.dir=" + System.getProperty("user.dir"));
         if (args.length == 0) {
             logger.log(Level.SEVERE, "Use: java com.nuevatel.pathfinding.Pathfinding </path/to/properties>");
             return;
