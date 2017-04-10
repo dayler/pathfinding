@@ -86,7 +86,7 @@ public class PathfindingApp {
     }
     
     private void startWsi() {
-        PathfindingWsService wsImpl = new PathfindingWsService(new DijkstraPathfinding(graph));
+        PathfindingWsService wsImpl = new PathfindingWsService(new DijkstraPathfinding(graph), config.getDestinationNodeName());
         Set<Endpoint> endpointSet = new HashSet<>();
         endpointSet.add(Endpoint.create(wsImpl));
         try {
