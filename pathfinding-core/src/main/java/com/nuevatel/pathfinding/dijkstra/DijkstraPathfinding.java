@@ -29,16 +29,34 @@ import com.nuevatel.pathfinding.utils.ParameterUtils;
  */
 public class DijkstraPathfinding {
 
+	/**
+	 * Graph nodes.
+	 */
     private List<Node> nodes;
     
+    /**
+     * Edges (nodeA, nodeB)
+     */
     private List<Edge> edges;
     
+    /**
+     * Used nodes.
+     */
     private Set<Node> settledNodes;
     
+    /**
+     * Unused nodes.
+     */
     private Set<Node> unSettledNodes;
     
+    /**
+     * predecessors.
+     */
     private Map<Node, Node> predecessors;
     
+    /**
+     * Accumulated distance.
+     */
     private Map<Node, Integer> distance;
 
     private Object lck = new Object();
@@ -50,16 +68,25 @@ public class DijkstraPathfinding {
         this.edges = new ArrayList<Edge>(graph.getEdges());
     }
     
+    /**
+     * From node name get the node.
+     * @param nodeName
+     * @return
+     */
     public Node getNodeFromName(String nodeName) {
         return nodes.stream().filter(n -> n.getName().equalsIgnoreCase(nodeName)).findAny().orElse(null);
     }
     
+    /**
+     * Builds Dijkstra matrix.
+     * @param source
+     */
     public void execute(Node source) {
         settledNodes = new HashSet<Node>(); // Utilizados.
         unSettledNodes = new HashSet<Node>(); // No utilizados.
         distance = new HashMap<Node, Integer>();
         predecessors = new HashMap<Node, Node>();
-        distance.put(source, 0);
+        distance.put(source, 0); // Initial node.
         unSettledNodes.add(source);
         while (!unSettledNodes.isEmpty()) {
             // while unSettledNodes is not empty.
@@ -70,6 +97,10 @@ public class DijkstraPathfinding {
         }
     }
 
+    /**
+     * 
+     * @param node
+     */
     private void findMinimalDistances(Node node) {
         List<Node> adjacentNodes = getNeighbors(node);
         for (Node target : adjacentNodes) {
@@ -87,7 +118,7 @@ public class DijkstraPathfinding {
                 return edge.getWeight();
             }
         }
-        throw new RuntimeException("Should not happen");
+        throw new RuntimeException("Failed not found distance between: " + node.toString() + "-" + target.toString());
     }
 
     private List<Node> getNeighbors(Node node) {
