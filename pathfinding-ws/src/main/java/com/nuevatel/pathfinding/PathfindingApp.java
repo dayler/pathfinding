@@ -23,18 +23,10 @@ import com.nuevatel.pathfinding.ws.PathfindingWsService;
 import com.nuevatel.pathfinding.ws.WsServer;
 
 /**
- * <p>
- * The PathfindingApp class.
- * </p>
- * <p>
- * NuevaTel PCS de Bolivia S.A. (c) 2017
- * </p>
- * <p>
- * El contenido de este archivo esta clasificado como:
- * </p>
- * <p>
- * INFORMACION DE CONFIDENCIALIDAD ALTA
- * </p>
+ * <p>The PathfindingApp class.</p>
+ * <p>NuevaTel PCS de Bolivia S.A. (c) 2017</p>
+ * <p>El contenido de este archivo esta clasificado como:</p>
+ * <p>INFORMACION DE CONFIDENCIALIDAD ALTA</p>
  * 
  * @author asalazar
  * @version 1.0 Apr 8, 2017
@@ -79,9 +71,7 @@ public class PathfindingApp {
         JdbcDerbyConnectionBuilder builder = new JdbcDerbyConnectionBuilder(config.getDbPath());
         try (Connection conn = builder.buildConnection()) {
             // get graph from dao.
-            GraphDao graphDao = new GraphDao();
-            Graph graph = graphDao.getGraph(conn);
-            this.graph = graph;
+            graph = new GraphDao().getGraph(conn);
         }
     }
     
